@@ -45,10 +45,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp" />
 
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ddd"
-        android:scaleType="centerCrop" />
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_image"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@mipmap/ddd"-->
+        <!--android:scaleType="centerCrop" />-->
+    <ProgressBar
+        android:id="@+id/pb_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        />
 </LinearLayout>
