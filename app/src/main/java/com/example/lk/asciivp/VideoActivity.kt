@@ -1,5 +1,6 @@
 package com.example.lk.asciivp
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -25,6 +26,7 @@ import android.view.WindowManager
 import com.example.lk.asciivp.R.id.nice_video_player
 import com.example.lk.asciivp.utils.CommonUtil.bitmapCompres
 import com.example.lk.asciivp.utils.SequenceEncoderMp4
+import com.tbruyelle.rxpermissions2.RxPermissions
 import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.concurrent.thread
@@ -116,18 +118,25 @@ class VideoActivity : AppCompatActivity(), TxVideoPlayerController.OnShareClickL
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
-                val selectList = PictureSelector.obtainMultipleResult(data)
-                if (selectList != null && selectList.size > 0) {
-                    val localMedia = selectList[0]
-                    filepath = localMedia.path
-                    setVideo()
+        RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe { granted ->
+            if (granted!!) {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                        val selectList = PictureSelector.obtainMultipleResult(data)
+                        if (selectList != null && selectList.size > 0) {
+                            val localMedia = selectList[0]
+                            filepath = localMedia.path
+                            setVideo()
+                        }
+
+
+                    }
                 }
-
-
+            } else {
+                showToast("没有获取到权限")
             }
         }
+
     }
 
     override fun onBackPressed() {
